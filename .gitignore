@@ -1,0 +1,25 @@
+# Private Keys # 
+################
+*.pem
+*.p12
+private_keys
+ 
+# Packages #
+############
+app
+vendor
+composer.lock
+ 
+# Logs and databases #
+######################
+*.log
+ 
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

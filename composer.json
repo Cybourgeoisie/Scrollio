@@ -1,0 +1,23 @@
+{
+    "name": "cybourgeoisie/scrollio",
+    "description": "PHP 7 Application Framework utilizing Geppetto Database ORM",
+    "homepage": "https://github.com/Cybourgeoisie/Scrollio",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Richard Benjamin Heidorn",
+            "email": "rbenheidorn@gmail.com",
+            "homepage": "http://cybourgeoisie.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "cybourgeoisie/geppetto" : "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Scrollio\\": "src/scrollio/"
+        }
+    }
+}
