@@ -2,7 +2,7 @@
 
 namespace Scrollio\Session;
 
-class SessionManager
+abstract class AbstractSessionManager
 {
 	public static function setData() {
 		// TODO

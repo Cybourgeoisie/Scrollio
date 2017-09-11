@@ -15,9 +15,7 @@ abstract class AbstractApi
 
 	public function __construct($request)
 	{
-		// TODO: we'll want to lock this down to only accept requests from the site
-		header("Access-Control-Allow-Orgin: *");
-		header("Access-Control-Allow-Methods: *");
+		// Set the default content type for this API
 		header("Content-Type: application/json");
 
 		// Get the arguments, class and method
@@ -80,7 +78,7 @@ abstract class AbstractApi
 	public function processRequest()
 	{
 		// Require that the class belongs to the Service namespace
-		$service_class = 'Service\\' . $this->endpoint_class;
+		$service_class = 'Scrollio\\Service\\' . $this->endpoint_class;
 
 		// Call the service class
 		if ($this->endpoint_class && $this->endpoint_method && class_exists($service_class))
@@ -88,7 +86,7 @@ abstract class AbstractApi
 			$class = new ReflectionClass($service_class);
 
 			// Require that this method is a Service
-			if ($class->implementsInterface('Service\ServiceInterface'))
+			if ($class->implementsInterface('Scrollio\Service\ServiceInterface'))
 			{
 				// Get the method and prepare parameters
 				$method = $class->getMethod('call');
