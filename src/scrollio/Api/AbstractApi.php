@@ -39,7 +39,7 @@ abstract class AbstractApi
 			}
 			else
 			{
-				throw new Exception("Unexpected Header");
+				throw new \Exception("Unexpected Header");
 			}
 		}
 
@@ -83,7 +83,7 @@ abstract class AbstractApi
 		// Call the service class
 		if ($this->endpoint_class && $this->endpoint_method && class_exists($service_class))
 		{
-			$class = new ReflectionClass($service_class);
+			$class = new \ReflectionClass($service_class);
 
 			// Require that this method is a Service
 			if ($class->implementsInterface('Scrollio\Service\ServiceInterface'))
@@ -96,7 +96,7 @@ abstract class AbstractApi
 			}
 			else
 			{
-				throw new Exception('Illegal Service Call');
+				throw new \Exception('Illegal Service Call');
 			}
 		}
 
@@ -128,7 +128,7 @@ abstract class AbstractApi
 			// Require that all responses have some kind of data coming back
 			else if (empty($data))
 			{
-				throw new Exception('No response from method call');
+				throw new \Exception('No response from method call');
 			}
 			else
 			{
