@@ -2,7 +2,7 @@
 
 namespace Scrollio\Model;
 
-abstract class AbstractModel extends Geppetto\Object
+abstract class AbstractModel extends \Geppetto\Object
 {
 	public function delete($hard_delete = false)
 	{
