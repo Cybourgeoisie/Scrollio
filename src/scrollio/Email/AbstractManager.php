@@ -2,10 +2,14 @@
 
 namespace Email;
 
-class Manager
+abstract class AbstractManager
 {
 	protected $mail;
+
+	protected $template_location = '';
 	protected $template_variables = array();
+
+	protected $default_email = '';
 
 	function __construct(string $to = null)
 	{
@@ -13,9 +17,9 @@ class Manager
 		$this->mail = new \PHPMailer\PHPMailer\PHPMailer(true);
 
 		// Grab the default sending email address
-		if (defined('DEFAULT_EMAIL') && DEFAULT_EMAIL)
+		if (isset($this->default_email) && !empty($this->default_email))
 		{
-			$this->setSender(DEFAULT_EMAIL);
+			$this->setSender($this->default_email);
 		}
 
 		// If there is an address passed in, set it
@@ -42,7 +46,7 @@ class Manager
 			throw new \Exception('Invalid email address as sender');
 		}
 
-		$this->mail->setFrom(DEFAULT_EMAIL, $from_name);
+		$this->mail->setFrom($from, $from_name);
 	}
 
 	public function setSubject(string $subject)
@@ -63,18 +67,32 @@ class Manager
 		}
 	}
 
+	public function setTemplateLocation($template_location)
+	{
+		// Validate that the location exists
+		if (!file_exists($this->template_location))
+		{
+			throw new \Exception('Template location (' . $template_location . ') not found.');
+		}
+
+		$this->template_location = $template_location;
+	}
+
 	private function constructHtmlEmail(string $body)
 	{
+		// Ensure that we have a template to work with
+		if (!isset($this->template_location) || empty($this->template_location))
+		{
+			throw new \Exception('Template location not set - can\'t construct HTML email.');
+		}
+
 		// Prepare the template variables
 		$this->template_variables = array_merge(array(
-			'SITE_NAME'          => SITE_NAME,
-			'SITE_ADDRESS'       => SITE_ADDRESS,
-			'SITE_ADDRESS_CLEAN' => SITE_ADDRESS_CLEAN,
-			'EMAIL_CONTENT'      => $body
+			'EMAIL_CONTENT' => $body
 		), $this->template_variables);
 
 		// Get the template shell
-		$template = file_get_contents(CORE_PATH . 'mail/email-template.html');
+		$template = file_get_contents($this->template_location);
 
 		// Replace all of the variables
 		foreach ($this->template_variables as $tpl_key => $value)
@@ -87,11 +105,19 @@ class Manager
 
 	public function setBody(string $body)
 	{
-		// Wrap the email in our template
-		$html_body = $this->constructHtmlEmail($body);
+		if (isset($this->template_location) && !empty($this->template_location))
+		{
+			// Wrap the email in our template
+			$html_body = $this->constructHtmlEmail($body);
 
-		// HTML email
-		$mail->Body = $html_body;
+			// HTML email
+			$mail->Body = $html_body;
+		}
+		else
+		{
+			// Just use straight text
+			$mail->Body = $body;
+		}
 
 		// Straight text
 		$mail->AltBody = $body;
