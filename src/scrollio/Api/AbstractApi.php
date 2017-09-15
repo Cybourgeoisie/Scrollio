@@ -4,6 +4,7 @@ namespace Scrollio\Api;
 
 abstract class AbstractApi
 {
+	protected $endpoint_namespace = '';
 	protected $endpoint_class = '';
 	protected $endpoint_method = '';
 	protected $http_method = '';
@@ -78,14 +79,14 @@ abstract class AbstractApi
 	public function processRequest()
 	{
 		// Require that the class belongs to the Service namespace
-		$service_class = 'Scrollio\\Service\\' . $this->endpoint_class;
+		$service_class = $this->endpoint_namespace . $this->endpoint_class;
 
 		// Call the service class
 		if ($this->endpoint_class && $this->endpoint_method && class_exists($service_class))
 		{
 			$class = new \ReflectionClass($service_class);
 
-			// Require that this method is a Service
+			// Require that this method is a Scrollio Service
 			if ($class->implementsInterface('Scrollio\Service\ServiceInterface'))
 			{
 				// Get the method and prepare parameters
