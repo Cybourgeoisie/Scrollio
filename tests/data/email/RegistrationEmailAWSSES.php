@@ -5,6 +5,7 @@ declare(strict_types=1);
 class RegistrationEmailAWSSES extends \Scrollio\Email\AbstractAWSSESManager
 {
 	protected $default_email = SCROLLIO_PHPUNIT_DEFAULT_EMAIL_SENDER;
+	protected $default_sender_name = SCROLLIO_PHPUNIT_DEFAULT_EMAIL_SENDER_NAME;
 
 	public function sendRegistrationEmail()
 	{
