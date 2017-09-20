@@ -1,0 +1,14 @@
+version: '2'
+services:
+  scrollio:
+    image: scrollio-tests
+    container_name: scrollio-tests
+    volumes:
+    - ./src:/var/www/src
+    - ./tests:/var/www/tests
+    - ./vendor:/var/www/vendor
+    - ./log/apache2:/var/log/apache2
+    environment:
+        AWS_ACCESS_KEY_ID:     '${SCROLLIO_AWS_ACCESS_KEY_ID}'
+        AWS_SECRET_ACCESS_KEY: '${SCROLLIO_AWS_SECRET_ACCESS_KEY}'
+    tty: true

@@ -18,7 +18,7 @@ else
 		// Add each website to the acceptable origins
 		$websites = explode(',', SCROLLIO_WEBSITE_ORIGINS);
 
-		foreach ($website in $websites) {
+		foreach ($websites as $website) {
 			if (filter_var($website, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED) === true) {
 				header("Access-Control-Allow-Orgin: " . $website, false);
 				header("Access-Control-Allow-Methods: " . $website, false);

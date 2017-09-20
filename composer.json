@@ -14,7 +14,8 @@
     "require": {
         "php": ">=7.0",
         "cybourgeoisie/geppetto" : "dev-master",
-        "phpmailer/phpmailer": "~6.0"
+        "phpmailer/phpmailer": "~6.0",
+        "aws/aws-sdk-php": "3.*"
     },
     "autoload": {
         "psr-4": {

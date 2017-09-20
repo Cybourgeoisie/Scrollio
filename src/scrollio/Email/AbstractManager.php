@@ -1,6 +1,6 @@
 <?php
 
-namespace Email;
+namespace Scrollio\Email;
 
 abstract class AbstractManager
 {
@@ -70,7 +70,7 @@ abstract class AbstractManager
 	public function setTemplateLocation($template_location)
 	{
 		// Validate that the location exists
-		if (!file_exists($this->template_location))
+		if (!file_exists($template_location))
 		{
 			throw new \Exception('Template location (' . $template_location . ') not found.');
 		}
@@ -78,7 +78,7 @@ abstract class AbstractManager
 		$this->template_location = $template_location;
 	}
 
-	private function constructHtmlEmail(string $body)
+	protected function constructHtmlEmail(string $body)
 	{
 		// Ensure that we have a template to work with
 		if (!isset($this->template_location) || empty($this->template_location))
@@ -133,5 +133,7 @@ abstract class AbstractManager
 		{
 			throw new \Exception('Could not send email: ' . $this->mail->ErrorInfo);
 		}
+
+		return true;
 	}
 }
