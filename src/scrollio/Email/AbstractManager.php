@@ -10,6 +10,7 @@ abstract class AbstractManager
 	protected $template_variables = array();
 
 	protected $default_email = '';
+	protected $default_sender_name = '';
 
 	function __construct(string $to = null)
 	{
@@ -19,7 +20,14 @@ abstract class AbstractManager
 		// Grab the default sending email address
 		if (isset($this->default_email) && !empty($this->default_email))
 		{
-			$this->setSender($this->default_email);
+			if (isset($this->default_sender_name) && !empty($this->default_sender_name))
+			{
+				$this->setSender($this->default_email, $this->default_sender_name);
+			}
+			else
+			{
+				$this->setSender($this->default_email);
+			}
 		}
 
 		// If there is an address passed in, set it
